@@ -1,0 +1,22 @@
+
+
+#localbias-app {
+
+  .spacer {
+    height: 50px;
+  }
+
+  #inputSrc {
+    padding: 18.5px 14px;
+    border: 0;
+  }
+
+  #app-wrapper {
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
