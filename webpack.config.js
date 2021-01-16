@@ -50,7 +50,7 @@ module.exports = {
     },
     output: {
       path: __dirname + "/dist/",
-      filename: "bundled.min.js"
+      filename: "localbias.qrcode.min.js"
     },
     plugins: debug ? [] : [
       new webpack.optimize.OccurrenceOrderPlugin(),
