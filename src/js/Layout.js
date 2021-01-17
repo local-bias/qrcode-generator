@@ -7,6 +7,8 @@ import Skeleton from '@material-ui/lab/Skeleton';
 
 const CANVAS_ID = 'qrCanvas';
 
+const DOWNLOAD_FILE_NAME = 'qr-code.jpg';
+
 export default props => {
 
   const [input, setInput] = React.useState('');
@@ -23,7 +25,7 @@ export default props => {
     }
   }
 
-  function download(e) {
+  function onClickDownload(e) {
 
     if (!input) {
       return;
@@ -31,29 +33,35 @@ export default props => {
 
     qrcode.toDataURL(
       input,
-      (error, url) => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-        const a = document.createElement("a");
-        document.body.append(a);
-        a.download = 'qr-code.jpg';
-        a.href = url;
-        a.click();
-        a.remove();
-      }
+      (err, url) => err ? console.log(err) : download(url, DOWNLOAD_FILE_NAME)
     );
   }
 
   return (
     <div id="app-wrapper">
-      <TextField id="inputSrc" label="QRコードに変換する文字列・URL" variant="outlined" onChange={onChangeSrc} value={input} fullWidth placeholder="https://" />
+      <TextField
+        id="inputSrc"
+        label="QRコードに変換する文字列・URL"
+        variant="outlined"
+        onChange={onChangeSrc}
+        value={input}
+        fullWidth
+        placeholder="https://"
+      />
       <div className="spacer" />
       {input ? null : <Skeleton variant="rect" width={200} height={200} />}
       <canvas id={CANVAS_ID} style={{ display: input ? "block" : "none" }} />
       <div className="spacer" />
-      <Button variant="contained" color="primary" onClick={download} >ダウンロード</Button>
+      <Button variant="contained" color="primary" onClick={onClickDownload} >ダウンロード</Button>
     </div>
   );
+}
+
+function download(url, name) {
+  const a = document.createElement("a");
+  document.body.append(a);
+  a.download = name;
+  a.href = url;
+  a.click();
+  a.remove();
 }
